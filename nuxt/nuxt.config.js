@@ -1,19 +1,11 @@
 import colors from 'vuetify/es5/util/colors'
 
-let mode = process.env.NODE_ENV || 'prototype'
-import { config } from './config.js'
-
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
-
-  // router
-  router: {
-    base: config[mode].baseurl,
-  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -24,7 +16,7 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: `${config[mode].baseurl}favicon.ico` }],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
@@ -38,10 +30,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    // https://go.nuxtjs.dev/typescript
-    '@nuxt/typescript-build',
-    // https://go.nuxtjs.dev/stylelint
-    '@nuxtjs/stylelint-module',
+    // https://go.nuxtjs.dev/eslint
+    '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
   ],
@@ -89,5 +79,11 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    babel: {
+      plugins: [
+        ["@babel/plugin-proposal-private-methods", { loose: true }]
+      ]
+    }
+  },
 }
