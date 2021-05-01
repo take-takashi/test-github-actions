@@ -37,7 +37,7 @@ jobs:
 
       # run docker-compose
       - name: docker-compose
-        run: docker-compose up -d
+        run: docker-compose up
 
       # generateしたdistフォルダをアップロードする
       - name: Archive Production Artifact
