@@ -35,18 +35,13 @@ jobs:
         run: npm ci
         working-directory: ./nuxt
 
+      # run docker-compose
       - name: docker-compose
-        run: docker-compose up -d
+        run: docker-compose up
 
-      #- name: Archive Production Artifact
-      #   generateしたdistフォルダを永続化する
-      #  uses: actions/upload-artifact@master
-      #  with:
-      #    name: dist
-      #    path: dist
-
-      # Runs a set of commands using the runners shell
-      #- name: Run a multi-line script
-      #  run: |
-      #    echo Add other actions to build,
-      #    echo test, and deploy your project.
+      # generateしたdistフォルダをアップロードする
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: nuxt/dist
