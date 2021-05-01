@@ -1,5 +1,8 @@
 import colors from 'vuetify/es5/util/colors'
 
+let mode = process.env.NODE_ENV || 'prototype'
+import { config } from './config.js'
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
@@ -82,4 +85,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  // router
+  router: {
+    base: config[mode].baseurl,
+  }
 }
