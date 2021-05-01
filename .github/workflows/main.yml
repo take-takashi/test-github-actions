@@ -22,11 +22,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout Repo
-        uses: actions/checkout@master
+        uses: actions/checkout@v2
 
       # nodeを利用（npm install, or npm ci利用のため）
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: '15.8.0'
 
@@ -37,11 +37,18 @@ jobs:
 
       # run docker-compose
       - name: docker-compose
-        run: docker-compose up
+        run: docker-compose up -d
 
       # generateしたdistフォルダをアップロードする
       - name: Archive Production Artifact
-        uses: actions/upload-artifact@master
+        uses: actions/upload-artifact@v2
         with:
           name: dist
           path: nuxt/dist
+
+      # github pagesにデプロイ
+      - name: Deploy Github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./nuxt/dist
