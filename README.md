@@ -19,3 +19,5 @@ https://take-takashi.github.io/test-github-actions/
 - `nuxt.config.js`に環境を判断できる変数を追加
 - `nuxt.config.js`を`config.js`を読み込むように修正
 - `nuxt.config.js`に`router`の設定を追加
+- `.babelrc`を削除（デフォルトでnuxtが上書きするので）
+- `nuxt.config.js`の`build`に`babel`の修正（looseオプションが煩いので）
