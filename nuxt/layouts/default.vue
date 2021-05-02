@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <p>hello</p>
+    <v-app-bar app dense>
+      <p class="title2">面倒な出退勤</p>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -13,3 +13,11 @@
     </v-footer>
   </v-app>
 </template>
+
+<style scoped>
+.title2 {
+  font-family: 'Shippori Mincho';
+  margin: 0;
+  font-size: xx-large;
+}
+</style>
