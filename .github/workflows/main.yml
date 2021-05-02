@@ -16,48 +16,62 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node: [15.8.0]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout Repo
+      - name: Checkout Repo 🛎
         uses: actions/checkout@v2
 
       # nodeを利用（npm install, or npm ci利用のため）
-      - name: Use Node.js
+      - name: Setup node env 🏗
         uses: actions/setup-node@v2
         with:
-          node-version: '15.8.0'
+          node-version: ${{ matrix.node }}
 
       # cache module
       - name: Cache node_modules 📦
+        id: node_modules_cache_id
         uses: actions/cache@v2
         with:
-          path: ~/.npm
+          path: ~/nuxt/node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
 
       # 「npm install」でもいいはずだが、「npm ci」の方がpackage-lockを参照するので早い？
-      - name: Install dependencies
+      # cache module利用
+      - name: Install dependencies 👨🏻‍💻
+        if: steps.node_modules_cache_id.outputs.cache-hit != 'true'
         run: npm ci
         working-directory: ./nuxt
 
       # run docker-compose
-      - name: docker-compose
+      - name: docker-compose 🐳
         run: ./run_development.sh
 
       # generateしたdistフォルダをアップロードする
-      - name: Archive Production Artifact
+      - name: Archive Production Artifact 💎
         uses: actions/upload-artifact@v2
         with:
           name: dist
           path: nuxt/dist
 
       # github pagesにデプロイ
-      - name: Deploy Github pages
+      - name: Deploy Github pages 🤖
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./nuxt/dist
+
+      #- name: Run linter 👀
+      #  run: npm run lint
+
+      #- name: Run tests 🧪
+      #  run: npm run test

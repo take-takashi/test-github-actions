@@ -1,11 +1,19 @@
 import colors from 'vuetify/es5/util/colors'
 
+let mode = process.env.NODE_ENV || 'prototype'
+import { config } from './config.js'
+
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
   // Target: https://go.nuxtjs.dev/config-target
   target: 'static',
+
+  // router
+  router: {
+    base: config[mode].baseurl,
+  },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -52,7 +60,7 @@ export default {
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {
     manifest: {
-      lang: 'en',
+      lang: 'ja',
     },
   },
 
