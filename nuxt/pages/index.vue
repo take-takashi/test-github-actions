@@ -1,35 +1,28 @@
 <template>
-  <v-form name="main">
-    <!-- 説明の表示 -->
-    <v-row justify="center" align="center">
-      <v-col cols="12">
-        <p>さあ、出勤しよう</p>
-      </v-col>
-    </v-row>
-    <!-- 社員番号入力 -->
-    <v-text-field label="社員番号" outlined />
-    <!-- ボタンの配置 -->
-    <v-row justify="center" align="center">
-      <v-col cols="12" sm="6">
-        <v-btn color="primary" rounded>
-          <span>出勤する</span>
-        </v-btn>
-      </v-col>
-      <v-col cols="12" sm="6">
-        <v-btn color="error" rounded>
-          <span>退勤する</span>
-        </v-btn>
-      </v-col>
-    </v-row>
-  </v-form>
+  <v-stage :config="configKonva">
+    <v-layer>
+      <v-circle :config="configCircle"></v-circle>
+    </v-layer>
+  </v-stage>
 </template>
 
-<style scoped lang="scss">
-* {
-  //outline: 1px solid lime;
+<script>
+export default {
+  data() {
+    return {
+      configKonva: {
+        width: 200,
+        height: 200,
+      },
+      configCircle: {
+        x: 100,
+        y: 100,
+        radius: 70,
+        fill: 'red',
+        stroke: 'black',
+        strokeWidth: 4,
+      },
+    }
+  },
 }
-
-p {
-  font-family: 'Shippori Mincho';
-}
-</style>
+</script>
