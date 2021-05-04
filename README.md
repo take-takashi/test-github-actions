@@ -21,3 +21,6 @@ https://take-takashi.github.io/test-github-actions/
 - `nuxt.config.js`に`router`の設定を追加
 - `.babelrc`を削除（デフォルトでnuxtが上書きするので）
 - `nuxt.config.js`の`build`に`babel`の修正（looseオプションが煩いので）
+
+- `npm install vue-konva konva --save`
+- pluginsに`vue-konva.js`追加

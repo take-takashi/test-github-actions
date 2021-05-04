@@ -1,3 +1,3 @@
 import Vue from 'vue'
 import VueKonva from 'vue-konva'
-Vue.use(VueKonva)
+Vue.use(VueKonva, { prefix: 'Konva' })
