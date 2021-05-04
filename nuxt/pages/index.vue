@@ -2,28 +2,36 @@
   <div>
     <!-- form -->
     <v-form name="main" @submit.prevent>
-      <!-- 印字入力 -->
-      <v-text-field
+      <!-- テキストエリア -->
+      <v-textarea
         v-model="hanko_inzi"
-        label="印字"
-        name="hanko_inzi"
+        label="印字文字"
         outlined
         @change="on_click"
         @keydown="on_click"
-      ></v-text-field>
+        @keyup="on_click"
+      ></v-textarea>
       <!-- スライダー -->
       <v-slider
-        v-model="hanko_scale"
-        hint="縮小倍率"
+        v-model="hanko_scale_x"
+        hint="横の拡大縮小"
         min="0.1"
-        max="1.0"
+        max="2.0"
         thumb-label="always"
         :persistent-hint="true"
         step="0.01"
         @change="on_click"
       ></v-slider>
-      <!-- ハンコ描画 -->
-      <v-btn @click="on_click">ハンコをつくる</v-btn>
+      <v-slider
+        v-model="hanko_scale_y"
+        hint="縦の拡大縮小"
+        min="0.1"
+        max="2.0"
+        thumb-label="always"
+        :persistent-hint="true"
+        step="0.01"
+        @change="on_click"
+      ></v-slider>
       <!-- プレビュー -->
       <!-- ここで描画させることでフォントを読み込んでいる -->
       <v-card v-show="false">
@@ -32,7 +40,7 @@
     </v-form>
     <!-- konva -->
     <Konva-stage :config="configKonva">
-      <Konva-layer>
+      <Konva-layer ref="layer">
         <Konva-circle :config="configCircle"></Konva-circle>
         <Konva-text :config="configText"></Konva-text>
       </Konva-layer>
@@ -45,7 +53,8 @@ export default {
   data() {
     return {
       hanko_inzi: '',
-      hanko_scale: 1.0,
+      hanko_scale_x: 1.0,
+      hanko_scale_y: 1.0,
       configKonva: {
         width: 200,
         height: 200,
@@ -66,9 +75,10 @@ export default {
         fontStyle: 'bold',
         fontFamily: 'Shippori Mincho',
         fill: 'red',
+        scaleX: 1.0,
+        scaleY: 1.0,
         draggable: true,
-        align: 'right',
-        scaleX: 0.5,
+        align: 'center',
       },
     }
   },
@@ -78,7 +88,9 @@ export default {
   methods: {
     on_click() {
       this.configText.text = this.hanko_inzi
-      this.configText.scaleX = this.hanko_scale
+      this.configText.scaleX = this.hanko_scale_x
+      this.configText.scaleY = this.hanko_scale_y
+      // this.$refs.layer.getNode().draw()
     },
   },
 }
