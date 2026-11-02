@@ -1,0 +1,24 @@
+name: mise parallel review PoC
+
+on:
+  pull_request:
+    paths:
+      - mise.toml
+      - 'scripts/*review*.sh'
+      - 'prompts/**'
+      - '.github/workflows/mise-parallel-review.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mock-parallel-review:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jdx/mise-action@v2
+      - name: Run parallel review orchestration (no AI credentials)
+        run: REVIEW_MOCK=1 mise run --jobs 3 review
+      - name: Validate the merged output
+        run: mise run review:check
