@@ -1,0 +1,1 @@
+Review the current repository's changes against the main branch, when possible, for missing tests. Do not modify files. Evaluate normal, abnormal, boundary, permissions, and infrastructure-failure cases. Report only concrete untested behaviors, each with path/line and a suggested test. If there are no findings, say so explicitly. Output Markdown with the heading `# tests review`.

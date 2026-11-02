@@ -1,0 +1,23 @@
+# Parallel Codex review PoC. Reviewer tasks run in parallel; merge runs after success.
+[tasks.review]
+description = "Run three Codex reviews concurrently and merge the results"
+run = [
+  { tasks = ["review:security", "review:correctness", "review:tests"] },
+  "bash scripts/merge-reviews.sh",
+]
+
+[tasks."review:security"]
+description = "Security-focused read-only review"
+run = "bash scripts/run-review.sh security"
+
+[tasks."review:correctness"]
+description = "Correctness-focused read-only review"
+run = "bash scripts/run-review.sh correctness"
+
+[tasks."review:tests"]
+description = "Test-coverage-focused read-only review"
+run = "bash scripts/run-review.sh tests"
+
+[tasks."review:check"]
+description = "Check the generated report files"
+run = "bash scripts/check-review-output.sh"
